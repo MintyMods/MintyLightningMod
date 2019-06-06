@@ -2,7 +2,7 @@ Small mod to provide lightning strike effects during thunder storms.
 I was always disappointed with the lack of actual lightning during thunder storms and thought this was due to a bug that would be fixed (the ground would light up but never any lightning?). Seeing as it hasn't been fixed yet (as off 1.5 update) - I created this small mod to provide the lightning visuals. The lightning is fork or sheet type and can be configured to either kill or be just a visual effect within the game.
 
 Note: The lightning only strikes during thunder storms.
-*** UPDATED V9.0, See change log below for details ***
+*** UPDATED V10.0, See change log below for details ***
 
 Please report any bugs or features you would like to see and also rate this mod if you like it ;o)
 
@@ -24,7 +24,7 @@ http://steamcommunity.com/sharedfiles/filedetails/?id=19528
 http://skyrim.nexusmods.com/downloads/file.php?id=1702
 
 Thanks for checking out my first mod. 
-
+Thanks to PlayerTwo who is helping me on the mod.
 Thanks to Arsenalrobert for the Video Link of version 1.0 (an updated link would be awesome) - http://www.youtube.com/watch?v=R_KqjQVIP1k
 
 Thanks to RandoomNoob for the scripting & maths assistence.
@@ -38,13 +38,17 @@ Note: It has been reported (by WhipDiddyWhip over @ Nexus) That if used with rea
 
 =============================================================
 
-Change Log: V9.1
-Added 0.15 as wait time choice
-Changed sound of strike 
+Change Log:v10 (Mostly PlayerTwo's doings)
+By Request (PlayerTwo): Changed max multipliers, Fork range to 3, Sheet range to 4
+By Request (PlayerTwo): Added 0.15 as the default wait time for animations
+By Request (PlayerTwo): Changed sound of fork strikes and added explosion
+By Request (ryus27): Chance to leave a Fire when hitting grass or roof tops. 
+By Request (Gantar): Strikes now come from above the clouds? Previously they started underneath the clouds.
+New Default Values; You are still free to change these via the config options, but the defaults look great!
 
 Change Log: v9
-By Request: Split distance menu into two seperate menus fork/sheet. 
-Toned down bloom levels and based intensity depending on distance
+By Request (PlayerTwo): Split distance menu into two seperate menus fork/sheet. 
+By Request (PlayerTwo): Toned down bloom levels and based intensity depending on distance
 Fixed settings screen to show bloom, and AnimTime values
 
 Change Log: v8

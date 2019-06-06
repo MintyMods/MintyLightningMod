@@ -5,275 +5,397 @@ import debug
 import utility
 import weather
 
-MintyQuestScript Property MintyLightningQuest Auto
-Book Property MintyLightningConfigBook Auto
+MintyQuestScript Property Config Auto
+MintyLogging Property Log Auto
 
-; Config Menus
+Weather Property SkyrimStormRainTU Auto ; 10a241
+Weather Property SkyrimStormRainFF Auto ; 10a23c
+Weather Property SkyrimStormRain Auto ; C8220
+Weather Property SkyrimOvercastRainVT Auto ; 10A746
+Weather Property FXMagicStormRain Auto ; D4886
+
 Message Property MintyMsgMainMenu Auto
 Message Property MintyMsgDamageMenu Auto
-Message Property MintyMsgTypeMenu Auto
-Message Property MintyMsgDistanceMenu Auto
-Message Property MintyMsgDistanceForkMenu Auto
-Message Property MintyMsgDistanceSheetMenu Auto
-Message Property MintyMsgFrequencyMenu Auto
-
-; Debug Menus
 Message Property MintyMsgDebugMenu Auto
-Message Property MintyMsgDebugMenuMore Auto
-Message Property MintyMsgStrikeOffsetMenu Auto
-Message Property MintyMsgNumTargetsMenu Auto
+Message Property MintyMsgForkMainMenu Auto
+Message Property MintyMsgDistanceMinForkMenu Auto
+Message Property MintyMsgDistanceMaxForkMenu Auto
+Message Property MintyMsgFrequencyForkMenu Auto
+Message Property MintyMsgSheetMainMenu Auto
+Message Property MintyMsgDistanceMinSheetMenu Auto
+Message Property MintyMsgDistanceMaxSheetMenu Auto
+Message Property MintyMsgFrequencySheetMenu Auto
 Message Property MintyMsgDbgForceWeatherMenu Auto
 Message Property MintyMsgDbgFeedBackMenu Auto
 Message Property MintyMsgDbgBloomMenu Auto
 Message Property MintyMsgDbgAnimMenu Auto
-String version = "9.0" ; Current Version
-String LogFile = "Minty"
-
-
-Function LogDebug(String msg) 
-	if (MintyLightningQuest.logDebugMessages)
-		 TraceUser(LogFile,msg)
-	endif
-EndFunction
-
-
-Function LogInfo(String msg) 
-	if (MintyLightningQuest.showDebugMessages)
-		Notification(msg)
-	endif
-	LogDebug(msg)
-EndFunction
 
 
 Event OnEffectStart(Actor Target, Actor Caster)
-	
-	OpenUserLog(LogFile) 
-	DisablePlayerControls(abMenu = True) ; Momentarily disable other menus
-	EnablePlayerControls(abMenu = True) ; Undo DisablePlayerControls
+	Wait(0.5)
 	ShowMainMenu()
- 
 EndEvent 
 
 
 Function ShowMainMenu(Bool abMenu = True, Int aiButton = 0)
-	Wait(0.5)
 	While abMenu
 		If (aiButton != -1) ; Wait for input
-		
-			aiButton = MintyMsgMainMenu.Show() ; Main Menu
-			If (aiButton == 0) ; DAMAGE MENU
-		
-				aiButton = MintyMsgDamageMenu.Show()
-				If (aiButton == 0) ; Gives Damage
-					LogInfo("Lightning is now hostile!")					
-					MintyLightningQuest.isLightningHostile = true
-				ElseIf (aiButton == 1) ; No Damage
-					LogInfo("Lightning is now harmless.")
-					MintyLightningQuest.isLightningHostile = false
-				EndIf
-				
-			ElseIf (aiButton == 1) ; FORK/SHEET
-				aiButton = MintyMsgTypeMenu.Show()
-				If (aiButton == 0) ; 0%
-					MintyLightningQuest.chanceToFork = 0
-				ElseIf (aiButton == 1) ; 10%
-					MintyLightningQuest.chanceToFork = 10
-				ElseIf (aiButton == 2) ; 25% 
-					MintyLightningQuest.chanceToFork = 25 ; DEFAULT
-				ElseIf (aiButton == 3) ; 50%
-					MintyLightningQuest.chanceToFork = 50
-				ElseIf (aiButton == 4) ; 75%
-					MintyLightningQuest.chanceToFork = 75
-				ElseIf (aiButton == 5) ; 100%
-					MintyLightningQuest.chanceToFork = 100
-				EndIf
-				LogInfo("Fork Lightning Chance = " + MintyLightningQuest.chanceToFork + "%")
-			ElseIf (aiButton == 2) ; DISTANCE
-			; START
-				aiButton = MintyMsgDistanceMenu.Show()
-				If (aiButton == 0) ; Fork
-				
-					aiButton = MintyMsgDistanceForkMenu.Show()
-					If (aiButton == 0) ; Fork
-						MintyLightningQuest.distanceForkMultiplyer = 1
-					ElseIf (aiButton == 1) ; Medium
-						MintyLightningQuest.distanceForkMultiplyer = 2
-					ElseIf (aiButton == 2) ; Long range 
-						MintyLightningQuest.distanceForkMultiplyer = 3
-					EndIf
-					LogInfo("Distance Multiplyer = " + MintyLightningQuest.distanceForkMultiplyer)	
-					
-				ElseIf (aiButton == 1) ; Sheet
-					
-					aiButton = MintyMsgDistanceSheetMenu.Show()
-					If (aiButton == 0) ; Local
-						MintyLightningQuest.distanceSheetMultiplyer = 1
-					ElseIf (aiButton == 1) ; Medium
-						MintyLightningQuest.distanceSheetMultiplyer = 2
-					ElseIf (aiButton == 2) ; Long range 
-						MintyLightningQuest.distanceSheetMultiplyer = 4
-					ElseIf (aiButton == 2) ; Distant range 
-						MintyLightningQuest.distanceSheetMultiplyer = 5
-					EndIf
-					LogInfo("Distance Multiplyer = " + MintyLightningQuest.distanceSheetMultiplyer)	
-					
-				Else
-					abMenu = False 
-				EndIf
-			; END	
-			ElseIf (aiButton == 3) 	; FREQUENCY
-				aiButton = MintyMsgFrequencyMenu.Show()
-				If (aiButton == 0) ; Low
-					MintyLightningQuest.updateFrequency = 10.0
-				ElseIf (aiButton == 1) ; Medium (Default)
-					MintyLightningQuest.updateFrequency = 5.0
-				ElseIf (aiButton == 2) ; High
-					MintyLightningQuest.updateFrequency = 1.0
-				EndIf
-				LogInfo("Frequncy = " + MintyLightningQuest.updateFrequency)				
-			ElseIf (aiButton == 4) 	; DEBUG MENU 
-			
-				While abMenu
-					aiButton = MintyMsgDebugMenu.Show()
-					If (aiButton == 0) 
-						
-						aiButton = MintyMsgDbgForceWeatherMenu.Show() ; Force Weather
-						If (aiButton == 0) 
-							
-							; RANDOM selection
-							int random = RandomInt(1,5)
-							if (random == 1)
-								MintyLightningQuest.SkyrimStormRainTU.ForceActive()
-							elseif (random == 2)
-								MintyLightningQuest.SkyrimStormRainFF.ForceActive()							
-							elseif (random == 3)
-								MintyLightningQuest.SkyrimStormRain.ForceActive()
-							elseif (random == 4)
-								MintyLightningQuest.SkyrimOvercastRainVT.ForceActive()							
-							elseif (random == 5)
-								MintyLightningQuest.FXMagicStormRain.ForceActive()
-							endif
-							
-						ElseIf (aiButton == 1) ; SkyrimStormRainTU 10a241
-							MintyLightningQuest.SkyrimStormRainTU.ForceActive()
-						ElseIf (aiButton == 2) ; SkyrimStormRainFF 10a23c
-							MintyLightningQuest.SkyrimStormRainFF.ForceActive()
-						ElseIf (aiButton == 3) ; SkyrimStormRain C8220 
-							MintyLightningQuest.SkyrimStormRain.ForceActive()
-						ElseIf (aiButton == 4) ; SkyrimOvercastRainVT 10A746
-							MintyLightningQuest.SkyrimOvercastRainVT.ForceActive()
-						ElseIf (aiButton == 5) ; FXMagicStormRain D4886							
-							MintyLightningQuest.FXMagicStormRain.ForceActive()
-						EndIf		
-						LogInfo("Waeather forced to " + GetCurrentWeather())
-						
-					ElseIf (aiButton == 1) ; SHOW STATUS
-					
-						TraceAndBox("Minty Lightning Mod (Version: " + version + ")" \
-						+ "\n\t Bloom: " + MintyLightningQuest.bloom \ 
-						+ "\n\t Strike Offset: " + MintyLightningQuest.strikeOffset \
-						+ "\n\t Frequncy: " + MintyLightningQuest.updateFrequency \
-						+ "\n\t Distance Fork: " + MintyLightningQuest.distanceForkMultiplyer \
-						+ "\n\t Distance Sheet: " + MintyLightningQuest.distanceSheetMultiplyer \
-						+ "\n\t Bloom: " + MintyLightningQuest.bloom \
-						+ "\n\t Anim Time: " + MintyLightningQuest.minAnimationTime \
-						+ "\n\t Fork Chance: " + MintyLightningQuest.chanceToFork \
-						+ "\n\t Hostile: " + MintyLightningQuest.isLightningHostile \
-						+ "\n\t Logging: " + MintyLightningQuest.logDebugMessages \
-						+ "\n\t Notifications: " + MintyLightningQuest.showDebugMessages \
-						+ "\n\t Weather: " + GetCurrentWeather())
-					
-					ElseIf (aiButton == 2) ; SHOW CREDITS
-						MessageBox( \
-							"Credits:-" \
-							+ "\n PlayerTwo" \ 
-							+ "\n RandoomNoob" \
-							+ "\n RedRavyn" \
-							+ "\n & More, see ReadMe.txt" \
-						)
-					
-					ElseIf (aiButton == 3) ; MORE...
-						
-						aiButton = MintyMsgDebugMenuMore.Show()
-						
-						If (aiButton == 0) 
-							aiButton = MintyMsgStrikeOffsetMenu.Show() ; STRIKE OFFSET
-							If (aiButton == 0) 
-								MintyLightningQuest.strikeOffset = 10.0
-							ElseIf (aiButton == 1)
-								MintyLightningQuest.strikeOffset = 50.0
-							ElseIf (aiButton == 2) 
-								MintyLightningQuest.strikeOffset = 100.0 ; DEFAULT
-							ElseIf (aiButton == 3) 
-								MintyLightningQuest.strikeOffset = 200.0
-							ElseIf (aiButton == 4) 
-								MintyLightningQuest.strikeOffset = 500.0
-							EndIf					
-					
-						ElseIf (aiButton == 1) 
-					
-							aiButton = MintyMsgDbgFeedBackMenu.Show() ; Show Logging
-							If (aiButton == 0) ; Off
-								MintyLightningQuest.showDebugMessages = False
-								MintyLightningQuest.logDebugMessages = False
-							elseIf (aiButton == 1) ; Info
-								MintyLightningQuest.showDebugMessages = True
-								MintyLightningQuest.logDebugMessages = True
-							elseIf (aiButton == 2) ; Debug
-								MintyLightningQuest.showDebugMessages = False
-								MintyLightningQuest.logDebugMessages = True
-							else
-								abMenu = False ; End the log level function
-							endif
-						
-						ElseIf (aiButton == 2) ; SHOW BLOOM
-
-							aiButton = MintyMsgDbgBloomMenu.Show() ; Show Bloom
-							If (aiButton == 0) 
-								MintyLightningQuest.bloom = 0.5
-							elseIf (aiButton == 1) 
-								MintyLightningQuest.bloom = 1.0
-							elseIf (aiButton == 2)
-								MintyLightningQuest.bloom = 2.0
-							elseIf (aiButton == 3)
-								MintyLightningQuest.bloom = 3.0 
-							elseIf (aiButton == 2) 
-								MintyLightningQuest.bloom = 4.0
-							else
-								abMenu = False ; End the log level function
-							endif
-
-						ElseIf (aiButton == 3) ; Animation Time			
-						
-							aiButton = MintyMsgDbgAnimMenu.Show() ; Show Wait Time
-							If (aiButton == 0) 
-								MintyLightningQuest.minAnimationTime = 0.0
-							elseIf (aiButton == 1) 
-								MintyLightningQuest.minAnimationTime = 0.15
-							elseIf (aiButton == 2) 
-								MintyLightningQuest.minAnimationTime = 0.3
-							elseIf (aiButton == 3)
-								MintyLightningQuest.minAnimationTime = 0.5
-							elseIf (aiButton == 4)
-								MintyLightningQuest.minAnimationTime = 1.0
-							elseIf (aiButton == 5) 
-								MintyLightningQuest.minAnimationTime = 2.0
-							else
-								abMenu = False ; End the log level function
-							endif						
-						Else
-							abMenu = False ; End the debug menu function
-						EndIf
-						
-					Else
-						abMenu = False ; End the debug menu function
-					EndIf			
-				EndWhile
-				
-			Else 
-				abMenu = False ; End the main message function
+			aiButton = MintyMsgMainMenu.Show() 
+			If (aiButton == 0)
+				ShowDamageMenu()
+			ElseIf (aiButton == 1)
+				ShowForkMainMenu()	
+			ElseIf (aiButton == 2)
+				ShowSheetMainMenu()
+			ElseIf (aiButton == 3)
+				ShowHelp()
+			ElseIf (aiButton == 4)
+				ShowDebugMainMenu()
+			Else
+				abMenu = False 
 			EndIf
 		EndIf
 	EndWhile
- 
 EndFunction
+
+
+Function ShowForkMainMenu(Bool abMenu = True, Int aiButton = 0)
+	While abMenu
+		aiButton = MintyMsgForkMainMenu.Show()
+		If (aiButton == 0)
+			ShowFrequencyForkMenu()
+		ElseIf (aiButton == 1) 
+			ShowMinDistanceForkMenu()
+		ElseIf (aiButton == 2) 
+			ShowMaxDistanceForkMenu()
+		ElseIf (aiButton == 3) 
+			ShowBloomForkMenu()
+		ElseIf (aiButton == 4) 
+			ShowAnimationTimeForkMenu()
+		Else
+			abMenu = False
+		EndIf
+	EndWhile
+EndFunction
+
+
+Function ShowSheetMainMenu(Bool abMenu = True, Int aiButton = 0)
+	While abMenu
+		aiButton = MintyMsgSheetMainMenu.Show()
+		If (aiButton == 0)
+			ShowFrequencySheetMenu()
+		ElseIf (aiButton == 1) 
+			ShowMinDistanceSheetMenu()
+		ElseIf (aiButton == 2) 
+			ShowMaxDistanceSheetMenu()
+		ElseIf (aiButton == 3) 
+			ShowBloomSheetMenu()
+		ElseIf (aiButton == 4) 
+			ShowAnimationTimeSheetMenu()
+		Else
+			abMenu = False
+		EndIf
+	EndWhile
+EndFunction
+
+
+Function ShowHelp(Bool abMenu = True, Int aiButton = 0)
+	; TODO as a book or note
+	Log.Warn("Not Implemented Yet")
+EndFunction
+
+
+Function ShowDebugMainMenu(Bool abMenu = True, Int aiButton = 0)
+	While abMenu
+		aiButton = MintyMsgDebugMenu.Show()
+		If (aiButton == 0) 
+			ShowForceWeatherMenu()
+		ElseIf (aiButton == 1) 
+			ShowStatusMenu()
+		ElseIf (aiButton == 2) 
+			ShowDebugFeedBackMenu()
+		ElseIf (aiButton == 3) 
+			ShowCreditsMenu()
+		Else
+			abMenu = False 
+		EndIf			
+	EndWhile
+EndFunction
+
+
+Function ShowDamageMenu(Bool abMenu = True, Int aiButton = 0)
+	aiButton = MintyMsgDamageMenu.Show()
+	If (aiButton == 0) ; Gives Damage
+		Log.Info("Lightning is now hostile!")					
+		Config.isLightningHostile = true
+	ElseIf (aiButton == 1) ; No Damage
+		Log.Info("Lightning is now harmless.")
+		Config.isLightningHostile = false
+	EndIf
+EndFunction
+
+
+Function ShowMinDistanceForkMenu(Bool abMenu = True, Int aiButton = 0)
+	aiButton = MintyMsgDistanceMinForkMenu.Show()
+	If (aiButton == 0)
+		Config.distanceForkMinMultiplyer = 1
+	ElseIf (aiButton == 1)
+		Config.distanceForkMinMultiplyer = 2
+	ElseIf (aiButton == 2)
+		Config.distanceForkMinMultiplyer = 3
+	EndIf
+	Log.Info("Min Fork Distance = " + Config.distanceForkMinMultiplyer)	
+EndFunction
+
+
+Function ShowMaxDistanceForkMenu(Bool abMenu = True, Int aiButton = 0)
+	aiButton = MintyMsgDistanceMaxForkMenu.Show()
+	If (aiButton == 0)
+		Config.distanceForkMaxMultiplyer = 1
+	ElseIf (aiButton == 1)
+		Config.distanceForkMaxMultiplyer = 2
+	ElseIf (aiButton == 2)
+		Config.distanceForkMaxMultiplyer = 3
+	EndIf
+	Log.Info("Max Fork Distance = " + Config.distanceForkMaxMultiplyer)	
+EndFunction
+
+
+Function ShowMinDistanceSheetMenu(Bool abMenu = True, Int aiButton = 0)
+	aiButton = MintyMsgDistanceMinSheetMenu.Show()
+	If (aiButton == 0) 
+		Config.distanceSheetMinMultiplyer = 1
+	ElseIf (aiButton == 1)
+		Config.distanceSheetMinMultiplyer = 2
+	ElseIf (aiButton == 2)
+		Config.distanceSheetMinMultiplyer = 4
+	ElseIf (aiButton == 2)
+		Config.distanceSheetMinMultiplyer = 5
+	EndIf
+	Log.Info("Min Sheet Distance = " + Config.distanceSheetMinMultiplyer)	
+EndFunction
+
+
+Function ShowMaxDistanceSheetMenu(Bool abMenu = True, Int aiButton = 0)
+	aiButton = MintyMsgDistanceMaxSheetMenu.Show()
+	If (aiButton == 0)
+		Config.distanceSheetMaxMultiplyer = 1
+	ElseIf (aiButton == 1)
+		Config.distanceSheetMaxMultiplyer = 2
+	ElseIf (aiButton == 2)
+		Config.distanceSheetMaxMultiplyer = 4
+	ElseIf (aiButton == 2)
+		Config.distanceSheetMaxMultiplyer = 5
+	EndIf
+	Log.Info("Max Sheet Distance = " + Config.distanceSheetMaxMultiplyer)	
+EndFunction
+
+
+Function ShowFrequencyForkMenu(Bool abMenu = True, Int aiButton = 0)
+	aiButton = MintyMsgFrequencyForkMenu.Show()
+	If (aiButton == 0) 
+		Config.isForkEnabled = False
+	ElseIf (aiButton == 1)
+		Config.updateFrequencyFork = 10.0 
+		Config.isForkEnabled = True
+	ElseIf (aiButton == 2)
+		Config.updateFrequencyFork = 5.0
+		Config.isForkEnabled = True
+	ElseIf (aiButton == 3)
+		Config.updateFrequencyFork = 0.3
+		Config.isForkEnabled = True
+	EndIf
+	Log.Info("Fork Frequncy = " + Config.updateFrequencyFork)		
+EndFunction
+
+
+Function ShowFrequencySheetMenu(Bool abMenu = True, Int aiButton = 0)
+	aiButton = MintyMsgFrequencySheetMenu.Show()
+	If (aiButton == 0)
+		Config.isSheetEnabled = False
+	ElseIf (aiButton == 1)
+		Config.updateFrequencySheet = 10.0
+		Config.isSheetEnabled = True
+	ElseIf (aiButton == 2)
+		Config.updateFrequencySheet = 5.0
+		Config.isSheetEnabled = True
+	ElseIf (aiButton == 3)
+		Config.updateFrequencySheet = 0.3
+		Config.isSheetEnabled = True
+	EndIf
+	Log.Info("Sheet Frequncy = " + Config.updateFrequencySheet)		
+EndFunction
+
+
+
+
+Function SetRandomWeather()
+	int random = RandomInt(1,5)
+	if (random == 1)
+		SkyrimStormRainTU.ForceActive()
+	elseif (random == 2)
+		SkyrimStormRainFF.ForceActive()							
+	elseif (random == 3)
+		SkyrimStormRain.ForceActive()
+	elseif (random == 4)
+		SkyrimOvercastRainVT.ForceActive()							
+	elseif (random == 5)
+		FXMagicStormRain.ForceActive()
+	endif
+	Log.Info("Random Weather : " + GetCurrentWeather())
+EndFunction
+
+
+Function ShowForceWeatherMenu(Bool abMenu = True, Int aiButton = 0)
+	aiButton = MintyMsgDbgForceWeatherMenu.Show()
+	if (aiButton == 0) 
+		SetRandomWeather()
+	elseif (aiButton == 1)
+		SkyrimStormRainTU.ForceActive()
+		Log.Info("Weather forced to SkyrimStormRainTU - 10a241")
+	elseif (aiButton == 2)
+		SkyrimStormRainFF.ForceActive()
+		Log.Info("Weather forced to SkyrimStormRainFF - 10a23c")
+	elseif (aiButton == 3)
+		SkyrimStormRain.ForceActive()
+		Log.Info("Weather forced to SkyrimStormRain - C8220")
+	elseif (aiButton == 4)
+		SkyrimOvercastRainVT.ForceActive()
+		Log.Info("Weather forced to SkyrimOvercastRainVT - 10A746")
+	elseif (aiButton == 5)					
+		FXMagicStormRain.ForceActive()
+		Log.Info("Weather forced to FXMagicStormRain - D4886")
+	endif		
+EndFunction
+
+
+Function ShowDebugFeedBackMenu(Bool abMenu = True, Int aiButton = 0)
+	aiButton = MintyMsgDbgFeedBackMenu.Show() ; Show Logging
+	If (aiButton == 0) ; Off
+		Config.showDebugMessages = False
+		Config.logDebugMessages = False
+	elseIf (aiButton == 1) ; Info
+		Config.showDebugMessages = True
+		Config.logDebugMessages = True
+	elseIf (aiButton == 2) ; Debug
+		Config.showDebugMessages = False
+		Config.logDebugMessages = True
+	else
+		abMenu = False 
+	endif
+	Log.Info("Showing Feedback")
+EndFunction
+
+
+Function ShowBloomForkMenu(Bool abMenu = True, Int aiButton = 0)
+	aiButton = MintyMsgDbgBloomMenu.Show() ; Show Bloom
+	If (aiButton == 0) 
+		Config.bloomFork = 0.5
+	elseIf (aiButton == 1) 
+		Config.bloomFork = 1.0
+	elseIf (aiButton == 2)
+		Config.bloomFork = 2.0
+	elseIf (aiButton == 3)
+		Config.bloomFork = 3.0 
+	elseIf (aiButton == 4) 
+		Config.bloomFork = 4.0
+	else
+		abMenu = False 
+	endif
+	Log.Info("Fork Bloom = " + Config.bloomFork)
+EndFunction
+
+
+Function ShowBloomSheetMenu(Bool abMenu = True, Int aiButton = 0)
+	aiButton = MintyMsgDbgBloomMenu.Show() ; Show Bloom
+	If (aiButton == 0) 
+		Config.bloomSheet = 0.5
+	elseIf (aiButton == 1) 
+		Config.bloomSheet = 1.0
+	elseIf (aiButton == 2)
+		Config.bloomSheet = 2.0
+	elseIf (aiButton == 3)
+		Config.bloomSheet = 3.0 
+	elseIf (aiButton == 4) 
+		Config.bloomSheet = 4.0
+	else
+		abMenu = False
+	endif
+	Log.Info("Sheet Bloom = " + Config.bloomSheet)
+EndFunction
+
+
+Function ShowAnimationTimeForkMenu(Bool abMenu = True, Int aiButton = 0)
+	aiButton = MintyMsgDbgAnimMenu.Show() ; Show Wait Time
+	If (aiButton == 0) 
+		Config.minAnimationTimeFork = 0.0
+	elseIf (aiButton == 1) 
+		Config.minAnimationTimeFork = 0.15
+	elseIf (aiButton == 2) 
+		Config.minAnimationTimeFork = 0.3
+	elseIf (aiButton == 3)
+		Config.minAnimationTimeFork = 0.5
+	elseIf (aiButton == 4)
+		Config.minAnimationTimeFork = 1.0
+	elseIf (aiButton == 5) 
+		Config.minAnimationTimeFork = 2.0
+	else
+		abMenu = False
+	endif				
+	Log.Info("Fork Anim Time = " + Config.minAnimationTimeFork)
+EndFunction
+
+
+Function ShowAnimationTimeSheetMenu(Bool abMenu = True, Int aiButton = 0)
+	aiButton = MintyMsgDbgAnimMenu.Show() ; Show Wait Time
+	If (aiButton == 0) 
+		Config.minAnimationTimeSheet = 0.0
+	elseIf (aiButton == 1) 
+		Config.minAnimationTimeSheet = 0.15
+	elseIf (aiButton == 2) 
+		Config.minAnimationTimeSheet = 0.3
+	elseIf (aiButton == 3)
+		Config.minAnimationTimeSheet = 0.5
+	elseIf (aiButton == 4)
+		Config.minAnimationTimeSheet = 1.0
+	elseIf (aiButton == 5) 
+		Config.minAnimationTimeSheet = 2.0
+	else
+		abMenu = False
+	endif		
+	Log.Info("Sheet Anim Time = " + Config.minAnimationTimeSheet)
+EndFunction
+
+Function ShowCreditsMenu(Bool abMenu = True, Int aiButton = 0)
+	MessageBox( \
+		"Credits:-" \
+		+ "\n PlayerTwo" \ 
+		+ "\n RandoomNoob" \
+		+ "\n & More, see ReadMe.txt" \
+		+ "\n @TODO create ReadMe.txt ;o)" \
+	)
+EndFunction
+
+
+Function ShowStatusMenu(Bool abMenu = True, Int aiButton = 0)
+	TraceAndBox("Minty Lightning Mod (Version: " + Config.version + ")" \
+	+ "\nFork Freq:" + Config.updateFrequencyFork \
+	+ ", Range(" + Config.distanceForkMinMultiplyer \
+	+ "," + Config.distanceForkMaxMultiplyer \
+	+ "), Bloom:" + Config.bloomFork \
+	+ ", Wait:" + Config.minAnimationTimeFork \	
+	+ "\nSheet Freq: " + Config.updateFrequencySheet \
+	+ ", Range(" + Config.distanceSheetMinMultiplyer \
+	+ "," + Config.distanceSheetMaxMultiplyer \
+	+ "), Bloom:" + Config.bloomSheet \
+	+ ", Wait:" + Config.minAnimationTimeSheet \
+	+ "\nHostile:" + Config.isLightningHostile \
+	+ "\nLogging:" + Config.logDebugMessages \
+	+ ", Notifications:" + Config.showDebugMessages \
+	+ "\nStrike Distance:" + Config.strikeDistance \
+	+ "\nWeather:" + GetCurrentWeather().GetClassification())
+EndFunction
+
+
+
+
