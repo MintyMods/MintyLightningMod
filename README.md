@@ -1,11 +1,13 @@
 # Minty Lightning Mod @ SkyRim
-Weather mod to provide Lightning for the [The Elder Scrolls V Skyrim](https://elderscrolls.bethesda.net/en/skyrim) using Bethesda Creation Kit
-
+Weather mod to provide Lightning for the [The Elder Scrolls V Skyrim](https://elderscrolls.bethesda.net/en/skyrim) using Bethesda  Creation Kit - Papyrus
 
 ## Features
   * Supports [SkyUI MCM Alternative Freamwork](https://www.nexusmods.com/skyrim/mods/81760)
   * Supports [Climates Of Tamriel](https://www.nexusmods.com/skyrim/mods/17802/) 2.1.
   * Supports [Real Rain](https://www.nexusmods.com/skyrim/mods/16541/?)
+
+## Latest Changes
+[See the Change Log](/doc/CHANGELOG.md)
 
 ## Getting Started
 
@@ -47,7 +49,7 @@ Please read [CONTRIBUTING.md](doc/CONTRIBUTING.md) for details on our code of co
 
 ## Authors
 
-* ** Rob Gregory (Minty) ** - *Initial work* - [Minty](https://github.com/MintyMods)
+* Rob Gregory ([Minty](https://github.com/MintyMods)) *Initial work*
 
 See also the list of [contributors](doc/CONTRIBUTORS.md) who participated in this project.
 
@@ -61,13 +63,10 @@ This project is licensed under the [Apache License](doc/LICENSE.md)
   * RandoomNoob for the scripting assistence.
   * Cipscis & JustinOther for the nice tutorials online and the Wiki work.
   * Arsenalrobert for the Video Link of version 1.0 - http://www.youtube.com/watch?v=R_KqjQVIP1k
-  * Cocknocker (GALACTICA GAMING)[https://www.youtube.com/channel/UCrSWSA44CyzB3hJpi_k_m7Q] , for the requirement ;o)
+  * Cocknocker [GALACTICA GAMING](https://www.youtube.com/channel/UCrSWSA44CyzB3hJpi_k_m7Q) , for the requirement ;o)
   * Jet Set Willy, for the beta testing.
-
-
-
   * PurpleBooth - Billie Thompson for the GitHub documentation templates (the thing you are reading now) [PurpleBooth](https://gist.github.com/PurpleBooth)
-
+  * keep-a-changelog - olivierlacan for the change log format [keep-a-changelog](https://github.com/olivierlacan/keep-a-changelog)
   
   
   
