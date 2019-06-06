@@ -11,6 +11,7 @@ Weather mod to provide Lightning for the [The Elder Scrolls V Skyrim](https://el
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 <br/>
+
 The following prerequisites are required for building the project from source on a Windows OS. If your OS of choice is not Windows then you probably don't need my help anyway :) 
 
 For runtime installation and requirements see [INSTALLATION.md](doc/INSTALLATION.md) 
