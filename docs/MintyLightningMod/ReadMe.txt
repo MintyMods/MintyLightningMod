@@ -2,10 +2,18 @@ MintyLightningMod
 
 
 Installation :
+It is recommended to let Nexus Mod Manager install the files 
+
+Manual Installation :
 Copy the contents of the archive into SkyRim/Data
 Ensure the Lightning During Thunder Storms mod is checked within Data options in splash screen.
 
 *** If upgrading from a previous version please create a clean save before installing ***
+
+See the following resources for more information on creating a clean save :
+http://forums.steampowered.com/forums/showthread.php?t=2791993
+http://www.darkcreations.org/forums/topic/3752-skse-cleans-invalid-scripts-from-old-mods/
+
 
 Minimum Requirements : SkyRim Version 1.4
 "The CK requires a minimum of 1.4 to be present before mods generated with it can be guaranteed to work."
@@ -20,6 +28,10 @@ Jet Set Willy, for the beta testing.
 
 
 =============================================================
+Change Log:v21
+* Fixed config menu to work against MCM 3.2
+* Fixed order the menu was shown within MCM (e.g. it was always shown 1st)
+
 
 Change Log:v20
 * Cleaned mod - Removed incorrect change to base ChainLightningLeftHand!
@@ -36,7 +48,6 @@ Change Log:v20
 * Removed broken strike sound
 * Added Force Weather option
 * Corrected translation key for globals tooltip
-
 
 
 Change Log:v19 - Removed check for isItRaining() to support COT 2.1.
