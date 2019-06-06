@@ -42,6 +42,9 @@ EndFunction
 
 ; http://www.creationkit.com/Movement_Relative_to_Another_Object
 Function MoveRefToPositionRelativeTo(ObjectReference akSubject, ObjectReference akTarget, Float OffsetDistance = 0.0, Float OffsetAngle = 0.0, bool FaceTarget = True, Float Height = 0.0) Global
+	if !akSubject || !akTarget
+		return
+	endIf
 	float AngleZ = akTarget.GetAngleZ() + OffsetAngle
 	float OffsetX = OffsetDistance * Math.Sin(AngleZ)
 	float OffsetY = OffsetDistance * Math.Cos(AngleZ)

@@ -88,8 +88,10 @@ EndFunction
 
 
 Function CastStrike(Spell strike)
-	strike.Cast(CasterRef, TargetRef)
-	ApplyBloom()
+	if CasterRef && CasterRef.GetParentCell() && CasterRef.GetParentCell().IsAttached()
+		strike.Cast(CasterRef, TargetRef)
+		ApplyBloom()
+	endif
 EndFunction
 
 Function ApplyBloom()
@@ -130,7 +132,7 @@ EndFunction
 
 Function PlaceCaster()
 	while (CasterRef == None)
-		CasterRef = TargetRef.PlaceAtme(MintyActivator,1)
+		CasterRef = TargetRef.PlaceAtme(MintyActivator,1, true)
 		Debug("CasterRef Placed : " + CasterRef)
 	endwhile	
 	bool visable = false
@@ -150,7 +152,7 @@ EndFunction
 Function PlaceTarget()
 	bool visable = false
 	while (TargetRef == None)
-		TargetRef = Player.PlaceAtme(MintyActivator,1)
+		TargetRef = Player.PlaceAtme(MintyActivator,1, true)
 	endwhile
 	while (!visable)
 		MoveRefToPositionRelativeTo(TargetRef, GetPlayer(), getOffsetDistance(), getRandomOffsetAngle(), shouldFaceTarget(), 0.0)
@@ -171,9 +173,11 @@ Function Dispose()
 	if CasterRef != None
 		CasterRef.disable()
 		CasterRef.delete()
+		CasterRef = none
 	endif				
 	if TargetRef != None
 		TargetRef.disable()
 		TargetRef.delete()
+		TargetRef = none
 	endif	
 EndFunction

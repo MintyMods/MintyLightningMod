@@ -97,11 +97,14 @@ EndFunction
 
 
 Function CastStrike(Spell strike)
-	MintySheetBloomImod.Apply(getSheetBloom())
-	strike.Cast(CasterRef, TargetRef)
-	Wait(getSheetWait())
-    MintySheetBloomImod.Remove() 
+	if CasterRef && CasterRef.GetParentCell() && CasterRef.GetParentCell().IsAttached()
+		MintySheetBloomImod.Apply(getSheetBloom())
+		strike.Cast(CasterRef, TargetRef)
+		Wait(getSheetWait())
+		MintySheetBloomImod.Remove() 
+	endif
 EndFunction
+
 
 Function CastImod()
 	Float fTDistance = Player.GetDistance(TargetRef)
@@ -146,7 +149,7 @@ EndFunction
 
 Function PlaceCaster()
 	while (CasterRef == None)
-		CasterRef = TargetRef.PlaceAtme(MintyActivator,1)
+		CasterRef = TargetRef.PlaceAtme(MintyActivator,1, true)
 		Debug("CasterRef Placed : " + CasterRef)
 	endwhile
 	bool visable = false
@@ -166,7 +169,7 @@ EndFunction
 Function PlaceTarget()
 	bool visable = false
 	while (TargetRef == None)
-		TargetRef = Player.PlaceAtme(MintyActivator,1)
+		TargetRef = Player.PlaceAtme(MintyActivator,1, true)
 	endwhile
 	while (!visable)
 		if (shouldPlaceStrikeHeightsByRegion())
@@ -203,6 +206,9 @@ EndFunction
 
 
 Function PositionSheetStrikeByRegion(ObjectReference akSubject, ObjectReference akTarget, Float OffsetDistance = 0.0, Float OffsetAngle = 0.0, bool FaceTarget = True) 
+	if !akSubject || !akTarget
+	  return
+	endIf
 	float AngleZ = akTarget.GetAngleZ() + OffsetAngle
 	float OffsetX = OffsetDistance * Math.Sin(AngleZ)
 	float OffsetY = OffsetDistance * Math.Cos(AngleZ)
@@ -217,9 +223,11 @@ Function Dispose()
 	if CasterRef != None
 		CasterRef.disable()
 		CasterRef.delete()
+		CasterRef = none
 	endif				
 	if TargetRef != None
 		TargetRef.disable()
 		TargetRef.delete()
+		TargetRef = none
 	endif	
 EndFunction

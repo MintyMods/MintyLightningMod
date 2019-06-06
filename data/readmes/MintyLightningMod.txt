@@ -33,8 +33,22 @@ Arsenalrobert for the Video Link of version 1.0 - http://www.youtube.com/watch?v
 Cocknocker, for the requirement ;o)
 Jet Set Willy, for the beta testing.
 
+Translations credits for MCM Menu support (RUSSIAN and JAPANESE still needed):-
+Czech : Vanilka
+French : Bufle / Brundle Mouche
+Spanish : Gomstor! Original
+Polish : olbins / Magda
+Italian : Lucasssvt
+German : Mahlzeit88
+Portuguese : Alex Silvestre
 
 =============================================================
+Change Log:v24
+* By request Baleur - Added option to remove current weather from list of bad weathers. Note: there is no 'un-do' for this feature yet!
+* Some minor script tweaks - Thanks to steve40
+* Fix to French translation to add missing tab separator - Thanks Brundle Mouche
+* Added Portuguese translations - Alex Silvestre
+
 Change Log:v23
 * By request revelationman - Added global variables to hold the MCM menu default values
 
