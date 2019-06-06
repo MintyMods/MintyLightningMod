@@ -1,0 +1,62 @@
+﻿$TRANSLATION_BY	Vanilka
+$Minty Lightning	Minty Lightning
+$Lightning during Thunder Storms	Blesky během bouří
+$Lightning Config	Nastavení blesků
+$Miscellaneous	Různé
+$Globals	Obecné
+$Credits	Spolupracovali
+$Advanced	Pokročilé
+$Fork Lightning	Rozvětvené blesky
+$Debugging	Debugging
+$Sheet Lightning	Blýskání
+$Experimental	Pokusné
+$Fork Lightning Options	Nastavení rozvětvených blesků
+$Enabled	Povoleno
+$Hostile	Zraňující
+$Frequency Delay	Zpoždění frekvence
+$Sound Delay	Zpoždění zvuku
+$Minimum distance	Minimální vzdálenost
+$Maximum distance	Maximální vzdálenost
+$Fork Bloom Options	Nastavení oslnění rozvětvenými blesky
+$Animation time	Délka animace
+$Bloom level	Úroveň oslnění
+$Sheet Lightning Options	Nastavení blýskání
+$Sheet Bloom Options	Nastavení oslnění blýskáním
+$Logging Options	Nastavení zápisu
+$Logging Enabled	Povolení zápisu
+$Show in game	Zobrazit ve hře
+$Weather Options	Nastavení počasí
+$Current Weather	Aktuální počasí
+$Force Weather	Vynutit počasí
+$Legacy Config Menu	Menu nastavení Legacy
+$Information	Informace
+$Version	Verze
+$Author	Autor
+$Contributors	Přispěli
+$Translators	Překladatelé
+$Thanks	Poděkování
+$Resources	Zdroje
+$Global Variable names I use, and they can be set via console if you want even more control, If you find a good fit, let me know and I will make them my defaults :D	Jména obecných proměnných, které používám; lze je nastavit přes konzoli, pokud chcete ještě větší kontrolu. Pokud najdete dobré nastavení, dejte mi vědět a já je zařadím mezi svá standardní nastavení. :D
+$When enabled strikes will fork from the sky and hit the ground	V případě povolení, blesky se snesou z nebe a uhodí do země
+$When enabled strikes will be hostile and gives damage to anything hit	V případě povolení, údery blesků budou zraňující a způsobí škody všemu, do čeho uhodí
+$This is the delay between strikes	Toto je prodleva mezi údery
+$The mimimum distance a strike can land, measured in game cells	Minimální vzdálenost, kterou blesk zasáhne, měřená v buňkách hry
+$The maximum distance a strike can land, measured in game cells	Maximální vzdálenost, kterou blesk zasáhne, měřená v buňkách hry
+$How long the bloom effect will be applied for during a Lightning strike	Jak dlouho bude trvat efekt oslnění během úderu blesku
+$How bright the bloom will be applied	Jak jasné oslnění bude použito
+$When enabled Sheet Lightning strikes in the sky	V případě povolení, na obloze se objeví blýskání
+$Delay before the sound is played after the strike has hit	Prodleva před přehráním zvuku po úderu blesku
+$Select one of the available 'Bad' weathers and force it to play	Vybrat jedno z dostupných ‚Špatných‘ počasí a vynutit jeho přehrání
+$Show the high level logging messages on the screen as in game notifications	Zobrazit zprávy zápisu vysoké úrovně na obrazovce jako herní oznámení
+$Add or remove the original configuration menus	Přidat či odebrat původní menu nastavení
+$English	Angličtina
+$Polish	Polština
+$Spanish	Španělština
+$French	Francouzština
+$Italian	Italština
+$Russian	Ruština
+$Czech	Čeština
+$German	Němčina
+$Japanese	Japonština
+$Force	Vynutit
+$Force the selected bad weather	Vynutit zvolené špatné počasí

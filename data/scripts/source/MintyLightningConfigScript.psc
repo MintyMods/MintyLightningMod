@@ -203,11 +203,11 @@ Function SetRandomWeather()
 	if (random == 1)
 		SkyrimStormRainTU.ForceActive()
 	elseif (random == 2)
-		SkyrimStormRainFF.ForceActive()							
+		SkyrimStormRainFF.ForceActive()
 	elseif (random == 3)
 		SkyrimStormRain.ForceActive()
 	elseif (random == 4)
-		SkyrimOvercastRainVT.ForceActive()							
+		SkyrimOvercastRainVT.ForceActive()
 	elseif (random == 5)
 		FXMagicStormRain.ForceActive()
 	endif
@@ -231,10 +231,10 @@ Function ShowForceWeatherMenu(Bool abMenu = True, Int aiButton = 0)
 	elseif (aiButton == 4)
 		SkyrimOvercastRainVT.ForceActive()
 		Log.Info("Weather forced to SkyrimOvercastRainVT - 10A746")
-	elseif (aiButton == 5)					
+	elseif (aiButton == 5)
 		FXMagicStormRain.ForceActive()
 		Log.Info("Weather forced to FXMagicStormRain - D4886")
-	elseif (aiButton == 6)					
+	elseif (aiButton == 6)
 		Notification ("Current Weather is " + GetCurrentWeather().GetFormID())
 	endif		
 EndFunction
@@ -312,7 +312,7 @@ Function ShowAnimationTimeForkMenu(Bool abMenu = True, Int aiButton = 0)
 		MintyConfig.setForkWait(0.5)
 	else
 		abMenu = False
-	endif				
+	endif
 	Log.Info("Fork Anim Time = " + DisplayFloatToXDecimalPlaces(MintyConfig.getForkWait(),4))
 EndFunction
 
@@ -333,7 +333,7 @@ Function ShowAnimationTimeSheetMenu(Bool abMenu = True, Int aiButton = 0)
 		MintyConfig.setSheetWait(0.5)
 	else
 		abMenu = False
-	endif		
+	endif
 	Log.Info("Sheet Anim Time = " + DisplayFloatToXDecimalPlaces(MintyConfig.getSheetWait(),4))
 EndFunction
 

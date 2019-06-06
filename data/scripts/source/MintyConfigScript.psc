@@ -5,20 +5,34 @@ import game
 import utility
 
 GlobalVariable Property MintyIsForkLightningHostile Auto
+GlobalVariable Property MintyIsForkLightningHostileDefault Auto
 GlobalVariable Property MintyIsSheetLightningHostile Auto
+GlobalVariable Property MintyIsSheetLightningHostileDefault Auto
 GlobalVariable Property MintyFaceTarget Auto
 GlobalVariable Property MintyIsForkEnabled Auto
+GlobalVariable Property MintyIsForkEnabledDefault Auto
 GlobalVariable Property MintyForkDistanceMin Auto
+GlobalVariable Property MintyForkDistanceMinDefault Auto
 GlobalVariable Property MintyForkDistanceMax Auto
+GlobalVariable Property MintyForkDistanceMaxDefault Auto
 GlobalVariable Property MintyForkFrequency Auto
+GlobalVariable Property MintyForkFrequencyDefault Auto
 GlobalVariable Property MintyForkBloom Auto
+GlobalVariable Property MintyForkBloomDefault Auto
 GlobalVariable Property MintyForkWait Auto
+GlobalVariable Property MintyForkWaitDefault Auto
 GlobalVariable Property MintyIsSheetEnabled Auto
+GlobalVariable Property MintyIsSheetEnabledDefault Auto
 GlobalVariable Property MintySheetDistanceMin Auto
+GlobalVariable Property MintySheetDistanceMinDefault Auto
 GlobalVariable Property MintySheetDistanceMax Auto
+GlobalVariable Property MintySheetDistanceMaxDefault Auto
 GlobalVariable Property MintySheetFrequency Auto
+GlobalVariable Property MintySheetFrequencyDefault Auto
 GlobalVariable Property MintySheetBloom Auto
+GlobalVariable Property MintySheetBloomDefault Auto
 GlobalVariable Property MintySheetWait Auto 
+GlobalVariable Property MintySheetWaitDefault Auto 
 GlobalVariable Property MintyWeatherCheckFrequency Auto
 GlobalVariable Property MintyCellSize Auto
 GlobalVariable Property MintyCellHeight Auto
@@ -94,13 +108,21 @@ Float Function getForkSoundDelay()
 	return MintyForkSoundDelay.getValue()
 EndFunction
 
+
 Float Function getForkBloom()
 	return MintyForkBloom.getValue()
 EndFunction
 
+Float Function getForkBloomDefault()
+	return MintyForkBloomDefault.getValue()
+EndFunction
 
 Float Function getSheetBloom()
 	return MintySheetBloom.getValue()
+EndFunction
+
+Float Function getSheetBloomDefault()
+	return MintySheetBloomDefault.getValue()
 EndFunction
 
 
@@ -108,11 +130,17 @@ Float Function getForkWait()
 	return MintyForkWait.getValue()
 EndFunction
 
+Float Function getForkWaitDefault()
+	return MintyForkWaitDefault.getValue()
+EndFunction
 
 Float Function getSheetWait()
 	return MintySheetWait.getValue()
 EndFunction
 
+Float Function getSheetWaitDefault()
+	return MintySheetWaitDefault.getValue()
+EndFunction
 
 Function setForkBloom(Float amount)
 	MintyForkBloom.setValue(amount)
@@ -225,24 +253,40 @@ Int Function getSheetDistanceMin()
 	return MintySheetDistanceMin.GetValueInt() as Int
 EndFunction
 
+Int Function getSheetDistanceMinDefault()
+	return MintySheetDistanceMinDefault.GetValueInt() as Int
+EndFunction
 
 Int Function getSheetDistanceMax()
 	return MintySheetDistanceMax.GetValueInt() as Int
 EndFunction
 
+Int Function getSheetDistanceMaxDefault()
+	return MintySheetDistanceMaxDefault.GetValueInt() as Int
+EndFunction
 
 Int Function getForkDistanceMin()
 	return MintyForkDistanceMin.GetValueInt() as Int
 EndFunction
 
+Int Function getForkDistanceMinDefault()
+	return MintyForkDistanceMinDefault.GetValueInt() as Int
+EndFunction
 
 Int Function getForkDistanceMax()
 	return MintyForkDistanceMax.GetValueInt() as Int
 EndFunction
 
+Int Function getForkDistanceMaxDefault()
+	return MintyForkDistanceMaxDefault.GetValueInt() as Int
+EndFunction
 
 Bool Function isForkEnabled()
 	return MintyIsForkEnabled.GetValueInt() as Bool
+EndFunction
+
+Bool Function isForkEnabledDefault()
+	return MintyIsForkEnabledDefault.GetValueInt() as Bool
 EndFunction
 
 
@@ -250,29 +294,58 @@ Bool Function isSheetEnabled()
 	return MintyIsSheetEnabled.GetValueInt() as Bool
 EndFunction
 
+Bool Function isSheetEnabledDefault()
+	return MintyIsSheetEnabledDefault.GetValueInt() as Bool
+EndFunction
 
 Bool Function isForkLightningHostile() 
 	return MintyIsForkLightningHostile.GetValueInt() as Bool
 EndFunction
 
+Bool Function isForkLightningHostileDefault() 
+	return MintyIsForkLightningHostileDefault.GetValueInt() as Bool
+EndFunction
+
+
 Bool Function isSheetLightningHostile() 
 	return MintyIsSheetLightningHostile.GetValueInt() as Bool
 EndFunction
 
+Bool Function isSheetLightningHostileDefault() 
+	return MintyIsSheetLightningHostileDefault.GetValueInt() as Bool
+EndFunction
+
+
 Float Function getUpdateFrequencyFork() 
 	return MintyForkFrequency.GetValue() as Float
+EndFunction
+
+Float Function getUpdateFrequencyForkDefault() 
+	return MintyForkFrequencyDefault.GetValue() as Float
 EndFunction
 
 Float Function getForkFrequency()
 	return MintyForkFrequency.GetValue() as Float
 EndFunction
 
+Float Function getForkFrequencyDefault()
+	return MintyForkFrequencyDefault.GetValue() as Float
+EndFunction
+
 Float Function getUpdateFrequencySheet() 
 	return MintySheetFrequency.GetValue() as Float
 EndFunction
 
+Float Function getUpdateFrequencySheetDefault() 
+	return MintySheetFrequencyDefault.GetValue() as Float
+EndFunction
+
 Float Function getSheetFrequency() 
 	return MintySheetFrequency.GetValue() as Float
+EndFunction
+
+Float Function getSheetFrequencyDefault() 
+	return MintySheetFrequencyDefault.GetValue() as Float
 EndFunction
 
 Float Function getUpdateFrequencyWeatherCheck() 
