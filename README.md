@@ -1,11 +1,13 @@
 # Minty Lightning Mod @ SkyRim
 Weather mod to provide Lightning for the [The Elder Scrolls V Skyrim](https://elderscrolls.bethesda.net/en/skyrim) using Bethesda Creation Kit
 
-
 ## Features
   * Supports [SkyUI MCM Alternative Freamwork](https://www.nexusmods.com/skyrim/mods/81760)
   * Supports [Climates Of Tamriel](https://www.nexusmods.com/skyrim/mods/17802/) 2.1.
   * Supports [Real Rain](https://www.nexusmods.com/skyrim/mods/16541/?)
+
+## Latest Changes
+[See the Change Log](/doc/CHANGELOG.md)
 
 ## Getting Started
 
