@@ -20,6 +20,8 @@ Jet Set Willy, for the beta testing.
 
 =============================================================
 
+Change Log:v19 - Removed check for isItRaining() to support COT 2.1.
+
 Change Log:v18 - Repacked and uploaded to include missing parent scripts.
 
 Change Log:v15,16,17 - Corrupted upload causing CTD when saving! 

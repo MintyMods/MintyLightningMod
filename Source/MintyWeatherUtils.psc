@@ -14,6 +14,7 @@ Bool Function isWeatherBadEnoughForLightning()
 	bool isBad = False
 	if !IsWeatherTransitioning()
 		int index = MintyBadWeathers.GetSize() 
+		Debug(index + " Bad Weathers found")
 		While(index > 0)
 			index -= 1
 			Reference = MintyBadWeathers.GetAt(index) as Weather
@@ -22,6 +23,7 @@ Bool Function isWeatherBadEnoughForLightning()
 			endif			
 		EndWhile
 	endif		
+	Info("Is Weather Bad : " + isBad)
 	return isBad
 EndFunction
 
@@ -29,10 +31,8 @@ EndFunction
 Bool Function IsStormWeather() 
 	bool isBad = false
 	if IsOutsideWithFullSky()
-		if IsWeatherRaining()
-			if IsWeatherBadEnoughForLightning()
-				isBad = true
-			endif
+		if IsWeatherBadEnoughForLightning()			
+			isBad = true
 		endif
 	endif
 	return isBad 
@@ -40,15 +40,18 @@ EndFunction
 
 
 Bool Function IsOutsideWithFullSky() 
+	Debug("SkyMode full : " + (GetSkyMode() == SKYMODE_FULL))
 	return (GetSkyMode() == SKYMODE_FULL)
 EndFunction
 
 
 Bool Function IsWeatherRaining() 
+	Debug("Is Raining " + (GetCurrentWeather().GetClassification() == WEATHER_RAINING))
 	return (GetCurrentWeather().GetClassification() == WEATHER_RAINING)
 EndFunction
 
 
 Bool Function IsWeatherTransitioning() 
+	Debug("Weather is transitioning " + !(GetCurrentWeatherTransition() == 1.0))
 	return !(GetCurrentWeatherTransition() == 1.0)
 EndFunction

@@ -3,6 +3,7 @@ Scriptname MintyQuestSheetScript extends MintyWeatherUtils
 
 import game
 import utility
+import weather
 import MintyUtility
 
 Activator property MintyActivator Auto
@@ -15,6 +16,11 @@ ObjectReference CasterRef = None
 ObjectReference TargetRef = None
 Actor Property Player Auto
 
+Weather Property SkyrimStormRainTU Auto ; 10a241
+Weather Property SkyrimStormRainFF Auto ; 10a23c
+Weather Property SkyrimStormRain Auto ; C8220
+Weather Property SkyrimOvercastRainVT Auto ; 10A746
+Weather Property FXMagicStormRain Auto ; D4886
 
 Event OnInit()
 	GotoState("CastingSheetStorm")
@@ -164,7 +170,11 @@ Function PlaceTarget()
 		TargetRef = Player.PlaceAtme(MintyActivator,1)
 	endwhile
 	while (!visable)
-		MoveRefToPositionRelativeTo(TargetRef, GetPlayer(), getOffsetDistance(), getRandomOffsetAngle(), shouldFaceTarget(), GetCellHeight())
+		if (shouldPlaceStrikeHeightsByRegion())
+			PositionSheetStrikeByRegion(TargetRef, GetPlayer(), getOffsetDistance(), getRandomOffsetAngle(), shouldFaceTarget())
+		else		
+			MoveRefToPositionRelativeTo(TargetRef, GetPlayer(), getOffsetDistance(), getRandomOffsetAngle(), shouldFaceTarget(), GetCellHeight())
+		endif
 		if (TargetRef.GetParentCell() != None) 
 			if (TargetRef.GetParentCell().IsAttached()) 
 				visable = true
@@ -173,6 +183,32 @@ Function PlaceTarget()
 			endif
 		endif
 	endwhile
+EndFunction
+
+
+Float Function getStrikeHeightDependingOnWeather()
+	Weather current = GetCurrentWeather()
+	if (current == SkyrimStormRainTU) ; 10a241
+		return -904.0
+	elseif (current == SkyrimStormRainFF) ; 10a23c
+		return 14596.0
+	elseif (current == SkyrimStormRain) ; C8220
+		return 3979.0
+	elseif (current == SkyrimOvercastRainVT) ; 10A746
+		return -5904.0
+	endif  
+	return (Player.Z + 4096.0) ; FXMagicStormRain D4886	
+EndFunction
+
+
+Function PositionSheetStrikeByRegion(ObjectReference akSubject, ObjectReference akTarget, Float OffsetDistance = 0.0, Float OffsetAngle = 0.0, bool FaceTarget = True) 
+	float AngleZ = akTarget.GetAngleZ() + OffsetAngle
+	float OffsetX = OffsetDistance * Math.Sin(AngleZ)
+	float OffsetY = OffsetDistance * Math.Cos(AngleZ)
+	akSubject.MoveTo(akTarget, OffsetX, OffsetY, getStrikeHeightDependingOnWeather())
+	if (FaceTarget)
+		akSubject.SetAngle(akSubject.GetAngleX(), akSubject.GetAngleY(), akSubject.GetAngleZ() + akSubject.GetHeadingAngle(akTarget))
+	endif
 EndFunction
 
 

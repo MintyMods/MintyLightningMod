@@ -19,9 +19,15 @@ GlobalVariable Property MintyWeatherCheckFrequency Auto
 GlobalVariable Property MintyCellSize Auto
 GlobalVariable Property MintyCellHeight Auto
 GlobalVariable Property MintyStrikeDistance Auto
+GlobalVariable Property MintyStrikeHeightByRegion Auto
 
 int YES = 1
 int NO = 0
+
+
+Bool Function shouldPlaceStrikeHeightsByRegion()
+	return MintyStrikeHeightByRegion.getValueInt() as Bool
+EndFunction
 
 
 Bool Function shouldFaceTarget()
