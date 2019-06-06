@@ -36,7 +36,7 @@ ObjectReference[] Bouncers
 Event OnInit()
 	if (!initalised)
 		Trace("Minty Lightning Quest Init...")
-		RegisterForUpdate(3.0)		
+		RegisterForUpdate(5.0)		
 		initalised = true;
 	endif
 EndEvent
@@ -99,18 +99,20 @@ Event OnUpdate()
 		targetRefOne = Bouncers[randomTartget1]
 		targetRefTwo = Bouncers[randomTartget2]
 		
-		if (casterRef != None && targetRefOne != None && targetRefTwo != None)
+		if (casterRef != None && targetRefOne != None)
 			if (casterRef.Is3DLoaded())
 				if (fork)
 					if (MintyForkLightningSpell != None)
-						Notification("Casting Fork Lightning")
+						Trace("Casting Fork Lightning")
 						MintyForkLightningSpell.Cast(casterRef, targetRefOne)
 					endif
 				else
 					if (MintySheetLightningSpell != None)
-						Notification("Casted Sheet Lightning")
+						Trace("Casted Sheet Lightning")
 						MintySheetLightningSpell.Cast(casterRef, targetRefOne)
-						MintySheetLightningSpell.Cast(casterRef, targetRefTwo)
+						if (targetRefTwo != None)
+							MintySheetLightningSpell.Cast(casterRef, targetRefTwo)
+						endif
 					endif
 				endif			
 				Wait(0.5)
@@ -158,19 +160,19 @@ bool Function isStormWeather()
 endFunction
 
 bool Function isWeatherBadEnoughForLightning() 
-	if (GetCurrentWeather().GetFormID() == SkyrimStormRainTU.GetFormID())
+	if (SkyrimStormRainTU != None && GetCurrentWeather().GetFormID() == SkyrimStormRainTU.GetFormID())
 		Trace("Weather is BadArse, SkyrimStormRainTU = 10a241")
 		return true
-	elseif (GetCurrentWeather().GetFormID() == SkyrimStormRainFF.GetFormID())
+	elseif (SkyrimStormRainFF != None && GetCurrentWeather().GetFormID() == SkyrimStormRainFF.GetFormID())
 		Trace("Weather is BadArse, SkyrimStormRainFF = 10a23c")
 		return true
-	elseif (GetCurrentWeather().GetFormID() == SkyrimStormRain.GetFormID())
+	elseif (SkyrimStormRain != None && GetCurrentWeather().GetFormID() == SkyrimStormRain.GetFormID())
 		Trace("Weather is BadArse, SkyrimStormRain = C8220")
 		return true
-	elseif (GetCurrentWeather().GetFormID() == SkyrimOvercastRainVT.GetFormID())
+	elseif (SkyrimOvercastRainVT != None && GetCurrentWeather().GetFormID() == SkyrimOvercastRainVT.GetFormID())
 		Trace("Weather is BadArse, SkyrimOvercastRainVT = 10A746")
 		return true
-	elseif (GetCurrentWeather().GetFormID() == FXMagicStormRain.GetFormID())
+	elseif (FXMagicStormRain != None && GetCurrentWeather().GetFormID() == FXMagicStormRain.GetFormID())
 		Trace("Weather is BadArse, FXMagicStormRain = D4886")
 		return true
 	else
