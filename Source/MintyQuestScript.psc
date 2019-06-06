@@ -7,7 +7,7 @@ import utility
 Quest Property qMintyLightningQuestFork Auto
 Quest Property qMintyLightningQuestSheet Auto
 Book Property MintyLightningConfigBook Auto
-
+Spell Property MintyLightningConfigSpell Auto
 
 Event OnInit()
 	GotoState("WatchingTheWeather")
@@ -71,7 +71,9 @@ EndFunction
 Function InitBooks()
 	Actor Player = GetPlayer()
 	if (Player.GetItemCount(MintyLightningConfigBook) < 1)
-		Player.addItem(MintyLightningConfigBook)
+		if (!Player.HasSpell(MintyLightningConfigSpell))
+			Player.addItem(MintyLightningConfigBook)
+		endif
 	endif
 EndFunction
 

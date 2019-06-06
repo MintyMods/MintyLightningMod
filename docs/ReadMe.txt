@@ -20,14 +20,15 @@ Jet Set Willy, for the beta testing.
 
 =============================================================
 
+Change Log:v18 (12/13/14)
+Finally resolved Uploading issues with Steam Workshop
+
+
 Change Log:v14 (12/13/14)
-Re-uploaded to resolve deployment issues with CK and NMM 
-Corrected version number displayed in game to 14.0 - skipping 12 & 13 due to deployment issues on Steam Workshop.
-By Request (RavenousRaven9) Corrected the default bloom animation times which was causing a white out!
-By Request (phaota) data directory added to archive to support NMM
-By Request (xNoobxSaibotx): Fork strike sound changed to one more thunderbolt like ;o) THUNDER :o)
-By Request (jacktthompson): Flaged which settings are the defaults within the menus before they are changed.
-By Request (arlie0527): Smoke added to burning effect after a strike.
+Re-uploaded to resolve deployment issues with CK and NMM (data directory added)
+Corrected version number displayed in game to 14.0 - skipping 12 & 13 due to deployment issues.
+Corrected the default bloom animation time which was causing a white out!
+By Request: Flaged which settings are the defaults within the menus before they are changed.
 Major increments (12/13/14/etc) are due to how Steam workshop handles versioning of uploads!
 
 

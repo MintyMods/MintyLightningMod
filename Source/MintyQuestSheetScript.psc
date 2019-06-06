@@ -9,10 +9,12 @@ Activator property MintyActivator Auto
 FormList Property MintySheetLightningSpells Auto
 FormList Property MintySheetLightningSpellsHostile Auto
 ImageSpaceModifier property MintySheetBloomImod Auto
+
 Spell spellToCastSheet = None
 ObjectReference CasterRef = None
 ObjectReference TargetRef = None
 Actor Property Player Auto
+
 
 Event OnInit()
 	GotoState("CastingSheetStorm")
