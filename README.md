@@ -61,7 +61,7 @@ This project is licensed under the [Apache License](doc/LICENSE.md)
   * RandoomNoob for the scripting assistence.
   * Cipscis & JustinOther for the nice tutorials online and the Wiki work.
   * Arsenalrobert for the Video Link of version 1.0 - http://www.youtube.com/watch?v=R_KqjQVIP1k
-  * Cocknocker (GALACTICA GAMING)[https://www.youtube.com/channel/UCrSWSA44CyzB3hJpi_k_m7Q] , for the requirement ;o)
+  * Cocknocker [GALACTICA GAMING](https://www.youtube.com/channel/UCrSWSA44CyzB3hJpi_k_m7Q) , for the requirement ;o)
   * Jet Set Willy, for the beta testing.
 
 
