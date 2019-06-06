@@ -2,7 +2,7 @@ Small mod to provide lightning strike effects during thunder storms.
 I was always disappointed with the lack of actual lightning during thunder storms and thought this was due to a bug that would be fixed (the ground would light up but never any lightning?). Seeing as it hasn't been fixed yet (as off 1.5 update) - I created this small mod to provide the lightning visuals. The lightning is fork or sheet type and can be configured to either kill or be just a visual effect within the game.
 
 Note: The lightning only strikes during thunder storms.
-*** UPDATED V6.0, See change log below for details ***
+*** UPDATED V8.0, See change log below for details ***
 
 Please report any bugs or features you would like to see and also rate this mod if you like it ;o)
 
@@ -27,12 +27,17 @@ Thanks for checking out my first mod.
 
 Thanks to Arsenalrobert for the Video Link of version 1.0 (an updated link would be awesome) - http://www.youtube.com/watch?v=R_KqjQVIP1k
 
+Thanks to RandoomNoob for the scripting & maths assistence.
+
 Preview Photo of lightning taken from:-
 http://kabachok.blogspot.co.uk/2008/02/lightning-plays-in-sky.html
 
 Other images are from in game screen shots from either myself or other welcome contributers within the comments section (screenies are hard to capture and especialy - 'That Moment'). So thanks for all the submissions. 
 
 Note: It has been reported (by WhipDiddyWhip over @ Nexus) That if used with realistic lighting's esp's then you need to ensure that this mod loads BEFORE that one otherwise the heavy rain is affected and doesn't work. 
+
+Change Log: v8
+Repackaged to include scripts following issue with the CK not creating .bsa files in the correct location
 
 Change Log: V7
 Resolved issues with not seeing menus
