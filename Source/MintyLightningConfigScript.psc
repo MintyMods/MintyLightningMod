@@ -5,7 +5,7 @@ import Game
 import debug
 import utility
 import weather
-;import message
+import MintyUtility
 
 MintyConfigScript Property MintyConfig Auto
 MintyLogging Property Log Auto
@@ -129,28 +129,28 @@ EndFunction
 Function ShowMinDistanceForkMenu(Bool abMenu = True, Int aiButton = 0)
 	aiButton = MintyMsgDistanceMinForkMenu.Show()
 	MintyConfig.setForkMinDistance(aiButton)
-	Log.Info("Min Fork Distance = " + MintyConfig.getForkDistanceMin())	
+	Log.Info("Min Fork Distance = " + getForkRangeDesc(MintyConfig.getForkDistanceMin()))	
 EndFunction
 
 
 Function ShowMaxDistanceForkMenu(Bool abMenu = True, Int aiButton = 0)
 	aiButton = MintyMsgDistanceMaxForkMenu.Show()
 	MintyConfig.setForkMaxDistance(aiButton)
-	Log.Info("Max Fork Distance = " + MintyConfig.getForkDistanceMax())	
+	Log.Info("Max Fork Distance = " + getForkRangeDesc(MintyConfig.getForkDistanceMax()))	
 EndFunction
 
 
 Function ShowMinDistanceSheetMenu(Bool abMenu = True, Int aiButton = 0)
 	aiButton = MintyMsgDistanceMinSheetMenu.Show()
 	MintyConfig.setSheetMinDistance(aiButton)
-	Log.Info("Min Sheet Distance = " + MintyConfig.getSheetDistanceMin())	
+	Log.Info("Min Sheet Distance = " + getSheetRangeDesc(MintyConfig.getSheetDistanceMin()))	
 EndFunction
 
 
 Function ShowMaxDistanceSheetMenu(Bool abMenu = True, Int aiButton = 0)
 	aiButton = MintyMsgDistanceMaxSheetMenu.Show()
 	MintyConfig.setSheetMaxDistance(aiButton)
-	Log.Info("Max Sheet Distance = " + MintyConfig.getSheetDistanceMax())	
+	Log.Info("Max Sheet Distance = " + getSheetRangeDesc(MintyConfig.getSheetDistanceMax()))	
 EndFunction
 
 
@@ -269,7 +269,7 @@ Function ShowBloomForkMenu(Bool abMenu = True, Int aiButton = 0)
 	else
 		abMenu = False 
 	endif
-	Log.Info("Fork Bloom = " + MintyConfig.getForkBloom())
+	Log.Info("Fork Bloom = " + DisplayFloatToXDecimalPlaces(MintyConfig.getForkBloom(),4))
 EndFunction
 
 
@@ -288,7 +288,7 @@ Function ShowBloomSheetMenu(Bool abMenu = True, Int aiButton = 0)
 	else
 		abMenu = False
 	endif
-	Log.Info("Sheet Bloom = " + MintyConfig.getSheetBloom())
+	Log.Info("Sheet Bloom = " + DisplayFloatToXDecimalPlaces(MintyConfig.getSheetBloom(),4))
 EndFunction
 
 
@@ -309,7 +309,7 @@ Function ShowAnimationTimeForkMenu(Bool abMenu = True, Int aiButton = 0)
 	else
 		abMenu = False
 	endif				
-	Log.Info("Fork Anim Time = " + MintyConfig.getForkWait())
+	Log.Info("Fork Anim Time = " + DisplayFloatToXDecimalPlaces(MintyConfig.getForkWait(),4))
 EndFunction
 
 
@@ -330,18 +330,18 @@ Function ShowAnimationTimeSheetMenu(Bool abMenu = True, Int aiButton = 0)
 	else
 		abMenu = False
 	endif		
-	Log.Info("Sheet Anim Time = " + MintyConfig.getSheetWait())
+	Log.Info("Sheet Anim Time = " + DisplayFloatToXDecimalPlaces(MintyConfig.getSheetWait(),4))
 EndFunction
 
 
 Function ShowStatusMenu(Bool abMenu = True, Int aiButton = 0)
-	String msg = "Minty Lightning Mod (Version: " + MintyConfig.getVersion() + ")\n"
+	String msg = "Minty Lightning Mod (Version: " + DisplayFloatToXDecimalPlaces(MintyConfig.getVersion(),4) + ")\n"
 
 	if (MintyConfig.isForkEnabled())
 		msg += getHostileDesc() + "Fork Lightning:-\n"
 		msg += getForkFreqencyDesc()
 		msg += "Range[" + getForkRangeDesc(MintyConfig.getForkDistanceMin()) + "," + getForkRangeDesc(MintyConfig.getForkDistanceMax()) + "]\n"
-		msg += "Bloom:" + MintyConfig.getForkBloom() + ", Wait:" + MintyConfig.getForkWait() + "\n"
+		msg += "Bloom:" + DisplayFloatToXDecimalPlaces(MintyConfig.getForkBloom(),4) + ", Wait:" + DisplayFloatToXDecimalPlaces(MintyConfig.getForkWait(),4) + "\n"
 	else
 		msg += "No Fork Lightning.\n"
 	endif
@@ -350,7 +350,7 @@ Function ShowStatusMenu(Bool abMenu = True, Int aiButton = 0)
 		msg += getHostileDesc() + "Sheet Lightning:-\n"
 		msg += getSheetFreqencyDesc()
 		msg += "Range[" + getSheetRangeDesc(MintyConfig.getSheetDistanceMin()) + "," + getSheetRangeDesc(MintyConfig.getSheetDistanceMax()) + "]\n"
-		msg += "Bloom:" + MintyConfig.getSheetBloom() + ", Wait:" + MintyConfig.getSheetWait() + "\n"
+		msg += "Bloom:" + DisplayFloatToXDecimalPlaces(MintyConfig.getSheetBloom(),4) + ", Wait:" + DisplayFloatToXDecimalPlaces(MintyConfig.getSheetWait(),4) + "\n"
 	else
 		msg += "No Sheet Lightning.\n"
 	endif
@@ -442,9 +442,21 @@ EndFunction
 Function ShowCredits()
 	MessageBox( \
 		"Credits:-" \
+		+ "\n My Mum" \ 
 		+ "\n Minty" \ 
 		+ "\n PlayerTwo" \ 
 		+ "\n see ReadMe.txt" \
 	)
 EndFunction
 
+String Function DisplayFloatToXDecimalPlaces(Float MyFloat, Int DecPlaces)
+	Return MyFloat ; Not working so bypass for now
+    Int Multiplier = Math.Pow(10, DecPlaces) as Int
+    MyFloat *= Multiplier
+    Int Floored = Math.Floor(MyFloat)
+    if (MyFloat - Floored >= 0.5)
+        Return ((Floored + 1) / Multiplier) as String
+    else
+        Return (Floored / Multiplier) as String
+    endif
+EndFunction

@@ -3,6 +3,19 @@ Scriptname MintyUtility
 
 import Utility
 
+; http://forums.bethsoft.com/topic/1381594-any-way-to-floor-a-float-from-1000000-to-1000/
+Float Function RoundFloatToXDecimalPlaces(Float MyFloat, Int DecPlaces)
+    Int Multiplier = Math.Pow(10, DecPlaces) as Int
+    MyFloat *= Multiplier
+    Int Floored = Math.Floor(MyFloat)
+    if (MyFloat - Floored >= 0.5)
+        Return ((Floored + 1) / Multiplier) as Float
+    else
+        Return (Floored / Multiplier) as Float
+    endif
+EndFunction
+
+
 ; Full Credit to RandoomNoob for the following Trig Function ;o)
 Function PositionTarget(ObjectReference Target, ObjectReference Caster, Float Offset) Global
     Float AngleX = Caster.GetAngleX()
