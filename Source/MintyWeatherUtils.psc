@@ -1,4 +1,4 @@
-Scriptname MintyWeatherUtils extends MintyLogging
+Scriptname MintyWeatherUtils extends MintyConfigScript
 { Weather Utility functions }
 
 import Weather

@@ -1,19 +1,50 @@
 Scriptname MintyUtility   
 {Utility functions}
 
+import Utility
+
+; Full Credit to RandoomNoob for the following Trig Function ;o)
+Function PositionTarget(ObjectReference Target, ObjectReference Caster, Float Offset) Global
+    Float AngleX = Caster.GetAngleX()
+    Float AngleZ = Caster.GetAngleZ()
+    Float DistanceZ = Offset * Math.Sin(-AngleX)
+    Float DistanceXY = Offset * Math.Cos(-AngleX)
+    Float DistanceX = DistanceXY * Math.Sin(AngleZ)
+    Float DistanceY = DistanceXY * Math.Cos(AngleZ)
+	Target.MoveTo(Caster, DistanceX, DistanceY, 0.0) ;DistanceZ
+	Caster.SetAngle(Target.GetAngleX(), Target.GetAngleY(), Target.GetAngleZ() + Caster.GetHeadingAngle(Target))
+EndFunction
+
+
+; Full Credit to RandoomNoob for the following Trig Function ;o)
+Function PositionRandomCaster(ObjectReference Caster, ObjectReference Target, Float distance = 200.00) Global
+	float anglez = Target.GetAngleZ() + getRandomOffsetAngle() ; 180.0 or +90 for right, -90 for left, 0 for in front
+	float offsetx = distance * math.sin(anglez)
+	float offsety = distance * math.cos(anglez)
+	Caster.MoveTo(Target, offsetx, offsety, 0)
+EndFunction
+
 
 ; http://www.creationkit.com/Movement_Relative_to_Another_Object
-Function MoveRefToPositionRelativeTo(ObjectReference akSubject, ObjectReference akTarget, Float OffsetDistance = 0.0, \
-  Float OffsetAngle = 0.0, bool FaceTarget = False) Global
+Function MoveRefToPositionRelativeTo(ObjectReference akSubject, ObjectReference akTarget, Float OffsetDistance = 0.0, Float OffsetAngle = 0.0, bool FaceTarget = True, Float Height = 0.0) Global
 	float AngleZ = akTarget.GetAngleZ() + OffsetAngle
 	float OffsetX = OffsetDistance * Math.Sin(AngleZ)
 	float OffsetY = OffsetDistance * Math.Cos(AngleZ)
-	akSubject.MoveTo(akTarget, OffsetX, OffsetY, 0.0)
+	akSubject.MoveTo(akTarget, OffsetX, OffsetY, Height)
 	if (FaceTarget)
-		akSubject.SetAngle(akSubject.GetAngleX(), akSubject.GetAngleY(), akSubject.GetAngleZ() + \
-		  akSubject.GetHeadingAngle(akTarget))
+		akSubject.SetAngle(akSubject.GetAngleX(), akSubject.GetAngleY(), akSubject.GetAngleZ() + akSubject.GetHeadingAngle(akTarget))
 	endif
 EndFunction
+
+
+Float Function getRandomOffsetAngle() Global
+	return RandomFloat(-180.0, 180.0)
+EndFunction
+
+
+;Function SetRandomAngle(ObjectReference MyObject) Global
+;	SetLocalAngle(MyObject, Utility.RandomFloat(-180.0, 180.0), Utility.RandomFloat(-180.0, 180.0), 0.0)
+;EndFunction
 
 
 ; http://www.creationkit.com/Setting_Local_Rotation
@@ -25,7 +56,7 @@ EndFunction
 
 
 ; http://www.creationkit.com/User:Fg109
-Function SmoothCurve(ObjectReference A, ObjectReference B, Float Speed)
+Function SmoothCurve(ObjectReference A, ObjectReference B, Float Speed) Global
     Float AngleZ = A.GetHeadingAngle(B)
     if (AngleZ < -45)
         Float OffsetAngle = -45.0 - AngleZ
@@ -45,7 +76,7 @@ EndFunction
 
 ; http://www.creationkit.com/User:Fg109 
 ; I wrote a function for converting from local to global rotation. I find that I use it a lot.
-Float[] Function ConvertRotation(Float AngleX, Float AngleY, Float AngleZ, Bool FromLocal = True)
+Float[] Function ConvertRotation(Float AngleX, Float AngleY, Float AngleZ, Bool FromLocal = True) Global
     Float NewX
     Float NewY
     if (FromLocal)
