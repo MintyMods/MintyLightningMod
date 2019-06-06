@@ -2,7 +2,7 @@ Small mod to provide lightning strike effects during thunder storms.
 I was always disappointed with the lack of actual lightning during thunder storms and thought this was due to a bug that would be fixed (the ground would light up but never any lightning?). Seeing as it hasn't been fixed yet (as off 1.5 update) - I created this small mod to provide the lightning visuals. The lightning is fork or sheet type and can be configured to either kill or be just a visual effect within the game.
 
 Note: The lightning only strikes during thunder storms.
-*** UPDATED V8.0, See change log below for details ***
+*** UPDATED V9.0, See change log below for details ***
 
 Please report any bugs or features you would like to see and also rate this mod if you like it ;o)
 
@@ -36,6 +36,17 @@ Other images are from in game screen shots from either myself or other welcome c
 
 Note: It has been reported (by WhipDiddyWhip over @ Nexus) That if used with realistic lighting's esp's then you need to ensure that this mod loads BEFORE that one otherwise the heavy rain is affected and doesn't work. 
 
+=============================================================
+
+Change Log: V9.1
+Added 0.15 as wait time choice
+Changed sound of strike 
+
+Change Log: v9
+By Request: Split distance menu into two seperate menus fork/sheet. 
+Toned down bloom levels and based intensity depending on distance
+Fixed settings screen to show bloom, and AnimTime values
+
 Change Log: v8
 Repackaged to include scripts following issue with the CK not creating .bsa files in the correct location
 
@@ -48,7 +59,6 @@ Removed incorrect dependency against directors tools.
 Change Log: V5
 Implemented bloom effect 
 Better placement of strikes
-
 
 Change Log: V4
 * Better Visual Effects, for both sheet lightning and fork. Still working on these, but I think they are better?
