@@ -49,7 +49,7 @@ Please read [CONTRIBUTING.md](doc/CONTRIBUTING.md) for details on our code of co
 
 ## Authors
 
-* ** Rob Gregory (Minty) ** - *Initial work* - [Minty](https://github.com/MintyMods)
+* Rob Gregory ([Minty](https://github.com/MintyMods)) *Initial work*
 
 See also the list of [contributors](doc/CONTRIBUTORS.md) who participated in this project.
 
