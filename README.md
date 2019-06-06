@@ -65,11 +65,8 @@ This project is licensed under the [Apache License](doc/LICENSE.md)
   * Arsenalrobert for the Video Link of version 1.0 - http://www.youtube.com/watch?v=R_KqjQVIP1k
   * Cocknocker [GALACTICA GAMING](https://www.youtube.com/channel/UCrSWSA44CyzB3hJpi_k_m7Q) , for the requirement ;o)
   * Jet Set Willy, for the beta testing.
-
-
-
   * PurpleBooth - Billie Thompson for the GitHub documentation templates (the thing you are reading now) [PurpleBooth](https://gist.github.com/PurpleBooth)
-
+  * keep-a-changelog - olivierlacan for the change log format [keep-a-changelog](https://github.com/olivierlacan/keep-a-changelog)
   
   
   
