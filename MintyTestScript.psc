@@ -1,19 +1,15 @@
-Scriptname MintyForkLightningScript extends activemagiceffect  
-
-import weather
-import utility
-import game
-import debug
+Scriptname MintyTestScript extends activemagiceffect  
 
 
-;FormList Property AimedSpellsList Auto
-Spell property MintyForkLightningSpell auto
-Activator property MintyActivator Auto
-;Activator Property DummyObject Auto
-Int Property ProjectilesMax Auto
-Int Property ProjectilesMin Auto
-Float Property CastingDistance Auto
+FormList Property MintyTestFormList Auto
+Activator Property DummyObject Auto
+Int Property ProjectilesMax = 50 Auto
+Int Property ProjectilesMin = 10 Auto
+Float Property CastingDistance = 1.0 Auto
 ObjectReference[] Dummies
+
+
+bool Function ForceReset() native
 
 
 Event OnEffectStart(Actor akTarget, Actor akCaster)
@@ -22,14 +18,14 @@ Event OnEffectStart(Actor akTarget, Actor akCaster)
         int Count = Utility.RandomInt(ProjectilesMin, ProjectilesMax)
         int index = 0
         while (index < Count)
-                Dummies[index] = PlaceInFrontOfMeRandom(akCaster, MintyActivator, CastingDistance)
+                Dummies[index] = PlaceInFrontOfMeRandom(akCaster, DummyObject, CastingDistance)
                 index += 1
         endwhile
         Spell TempSpell
         index = 0
         while (index < Count)
-                ;TempSpell = AimedSpellsList.GetAt(Utility.RandomInt(0, AimedSpellsList.GetSize() - 1)) as Spell
-                MintyForkLightningSpell.RemoteCast(Dummies[index], akCaster, akTarget)
+                TempSpell = MintyTestFormList.GetAt(Utility.RandomInt(0, MintyTestFormList.GetSize() - 1)) as Spell
+                TempSpell.RemoteCast(Dummies[index], akCaster, akTarget)
                 Dummies[index].Delete()
                 index += 1
         endwhile

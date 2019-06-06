@@ -1,0 +1,62 @@
+Small mod to provide lightning strike effects during thunder storms.
+I was always disappointed with the lack of actual lightning during thunder storms and thought this was due to a bug that would be fixed (the ground would light up but never any lightning?). Seeing as it hasn't been fixed yet (as off 1.5 update) - I created this small mod to provide the lightning visuals. The lightning is fork or sheet type and can be configured to either kill or be just a visual effect within the game.
+
+Note: The lightning only strikes during thunder storms.
+*** UPDATED V6.0, See change log below for details ***
+
+Please report any bugs or features you would like to see and also rate this mod if you like it ;o)
+
+Available from Steam WorkShop : http://steamcommunity.com/sharedfiles/filedetails/?id=360792
+Also available from SkyRim Nexus : http://skyrim.nexusmods.com/downloads/file.php?id=15506
+
+Works best along side the following mods:-
+
+Real Rain:-
+http://steamcommunity.com/sharedfiles/filedetails/?id=71218219
+http://skyrim.nexusmods.com/downloads/file.php?id=16541
+
+More Rain:-
+http://steamcommunity.com/sharedfiles/filedetails/?id=8989
+http://skyrim.nexusmods.com/downloads/file.php?id=8562
+
+Immersive Skyrim Thunder:-
+http://steamcommunity.com/sharedfiles/filedetails/?id=19528
+http://skyrim.nexusmods.com/downloads/file.php?id=1702
+
+Thanks for checking out my first mod. 
+
+Thanks to Arsenalrobert for the Video Link of version 1.0 (an updated link would be awesome) - http://www.youtube.com/watch?v=R_KqjQVIP1k
+
+Preview Photo of lightning taken from:-
+http://kabachok.blogspot.co.uk/2008/02/lightning-plays-in-sky.html
+
+Other images are from in game screen shots from either myself or other welcome contributers within the comments section (screenies are hard to capture and especialy - 'That Moment'). So thanks for all the submissions. 
+
+Note: It has been reported (by WhipDiddyWhip over @ Nexus) That if used with realistic lighting's esp's then you need to ensure that this mod loads BEFORE that one otherwise the heavy rain is affected and doesn't work. 
+
+Change Log: V7
+Resolved issues with not seeing menus
+
+Change Log: V6
+Removed incorrect dependency against directors tools.
+
+Change Log: V5
+Implemented bloom effect 
+Better placement of strikes
+
+
+Change Log: V4
+* Better Visual Effects, for both sheet lightning and fork. Still working on these, but I think they are better?
+* configurable! There is now a book, on top of the guard house at WhiteRun (Opposite the blacksmiths, BreazeHome, Drunken Huntsman) which will teach you a Spell(Power), and when cast, will allow you to configure the Mod.
+* Hidden Ring, (easter egg), that unlocks the 'Debugging Options - which can be fun to play with ;o)'
+
+Change Log: V3
+* Supports Sheet lightning with 10% chance to fork at ground
+* Player no longer gets blamed for strikes
+* Greater distances, no longer always strikes near player
+* Only strikes during bad weather now rather than just while raining
+- SkyrimStormRainTU = 10a241
+- SkyrimStormRainFF = 10a23c
+- SkyrimStormRain = C8220
+- SkyrimOvercastRainVT = 10A746
+- FXMagicStormRain = D4886
