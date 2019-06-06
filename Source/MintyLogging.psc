@@ -32,23 +32,27 @@ EndFunction
 
 
 Function Info(String msg)  
+	Debug(msg)
 	if (showDebugMessages)
 		Notification(msg)
 	endif
-	Debug(msg)
 EndFunction
 
 
 Function Warn(String msg)  
+	Debug(msg)
+	Notification(msg)
 	TraceStack("!WARN:" + msg, LOG_LEVEL_WARN)
-	Info(msg)
 EndFunction
 
 
 Function Error(String msg)  
+	Debug(msg)
 	if (showDebugMessages)
 		TraceAndBox("!ERROR:" + msg, LOG_LEVEL_ERROR)
 	elseif (logDebugMessages)
 		TraceStack("!ERROR:" + msg, LOG_LEVEL_ERROR) 
+	elseif (debugging)
+		Notification(msg)
 	endif
 EndFunction

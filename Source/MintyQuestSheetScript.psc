@@ -55,18 +55,33 @@ Function FireLightningStrike()
 EndFunction
 
 
-Function FireSheet()
+Function FireLightning()
+	int Size = MintySheetLightningSpells.GetSize()
+	int rand = RandomInt(1, size)
+	int position = rand - 1
+	spellToCastSheet = MintySheetLightningSpells.GetAt(position) as Spell
+	spellToCastSheet.Cast(CasterRef, TargetRef)
+	Info("Sheet Lightning Casted")
+EndFunction
+
+
+Function FireAllLightning()
 	int index = MintySheetLightningSpells.GetSize() 
 	While(index > 0)
 		index -= 1
-		PlaceTarget()
 		spellToCastSheet = MintySheetLightningSpells.GetAt(index) as Spell
-		MintyDA09BloomImod.apply(GetBloomIntensity())
 		spellToCastSheet.Cast(CasterRef, TargetRef)
 		Info("Sheet Lightning Casted")
-		Wait(minAnimationTimeSheet)
-		MintyDA09BloomImod.remove()	
 	endwhile
+EndFunction
+
+
+Function FireSheet()
+	PlaceTarget()
+	MintyDA09BloomImod.apply(GetBloomIntensity())
+	firelightning()
+	Wait(minAnimationTimeSheet)
+	MintyDA09BloomImod.remove()	
 EndFunction
 
 

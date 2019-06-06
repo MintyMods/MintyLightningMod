@@ -4,6 +4,7 @@ import Game
 import debug
 import utility
 import weather
+import message
 
 MintyQuestScript Property Config Auto
 MintyLogging Property Log Auto
@@ -195,17 +196,21 @@ Function ShowFrequencyForkMenu(Bool abMenu = True, Int aiButton = 0)
 	aiButton = MintyMsgFrequencyForkMenu.Show()
 	If (aiButton == 0) 
 		Config.isForkEnabled = False
+		Log.Info("No Fork strikes")
 	ElseIf (aiButton == 1)
 		Config.updateFrequencyFork = 10.0 
 		Config.isForkEnabled = True
+		Log.Info("Low chance for a Fork strike")
 	ElseIf (aiButton == 2)
 		Config.updateFrequencyFork = 5.0
 		Config.isForkEnabled = True
+		Log.Info("Medium chance for a Fork strike")
 	ElseIf (aiButton == 3)
 		Config.updateFrequencyFork = 0.3
 		Config.isForkEnabled = True
+		Log.Info("High chance for a Fork strike")
 	EndIf
-	Log.Info("Fork Frequncy = " + Config.updateFrequencyFork)		
+			
 EndFunction
 
 
@@ -213,17 +218,20 @@ Function ShowFrequencySheetMenu(Bool abMenu = True, Int aiButton = 0)
 	aiButton = MintyMsgFrequencySheetMenu.Show()
 	If (aiButton == 0)
 		Config.isSheetEnabled = False
+		Log.Info("No Sheet strikes")
 	ElseIf (aiButton == 1)
 		Config.updateFrequencySheet = 10.0
 		Config.isSheetEnabled = True
+		Log.Info("Low chance for a Sheet strike")
 	ElseIf (aiButton == 2)
 		Config.updateFrequencySheet = 5.0
 		Config.isSheetEnabled = True
+		Log.Info("Medium chance for a Sheet strike")
 	ElseIf (aiButton == 3)
 		Config.updateFrequencySheet = 0.3
 		Config.isSheetEnabled = True
+		Log.Info("High chance for a Sheet strike")
 	EndIf
-	Log.Info("Sheet Frequncy = " + Config.updateFrequencySheet)		
 EndFunction
 
 
@@ -382,13 +390,13 @@ Function ShowStatusMenu(Bool abMenu = True, Int aiButton = 0)
 	+ "\nFork Freq:" + Config.updateFrequencyFork \
 	+ ", Range(" + Config.distanceForkMinMultiplyer \
 	+ "," + Config.distanceForkMaxMultiplyer \
-	+ "), Bloom:" + Config.bloomFork \
+	+ "), Bloom:" + math.abs(Config.bloomFork) \
 	+ ", Wait:" + Config.minAnimationTimeFork \	
 	+ "\nSheet Freq: " + Config.updateFrequencySheet \
 	+ ", Range(" + Config.distanceSheetMinMultiplyer \
 	+ "," + Config.distanceSheetMaxMultiplyer \
-	+ "), Bloom:" + Config.bloomSheet \
-	+ ", Wait:" + Config.minAnimationTimeSheet \
+	+ "), Bloom:" + math.abs(Config.bloomSheet) \
+	+ ", Wait:" + Config.minAnimationTimeSheet  \
 	+ "\nHostile:" + Config.isLightningHostile \
 	+ "\nLogging:" + Config.logDebugMessages \
 	+ ", Notifications:" + Config.showDebugMessages \

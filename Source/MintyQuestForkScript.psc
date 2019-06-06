@@ -130,7 +130,7 @@ Function PlaceTarget()
 		TargetRef = CasterRef.PlaceAtme(MintyActivator,1)
 		PositionTarget(TargetRef, CasterRef, strikeOffsetAttempt)
 		TargetRef.setPosition(TargetRef.X, TargetRef.Y, GetPlayer().Z)
-	
+		
 		if (TargetRef.GetParentCell() != None) 
 			if (TargetRef.GetParentCell().IsAttached()) 
 				visable = true

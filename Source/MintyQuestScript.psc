@@ -22,7 +22,7 @@ Float Property bloomFork = 3.0 Auto
 Float Property bloomSheet = 3.0 Auto  
 Float Property minAnimationTimeFork = 0.3 Auto 
 Float Property minAnimationTimeSheet = 0.3 Auto 
-Float Property strikeDistance = 200.0 Auto
+Float Property strikeDistance = 100.0 Auto
 Float Property height = 4096.0 Auto
 Float Property halfCellSize = 2048.0 Auto
 
@@ -92,6 +92,7 @@ Function PositionTarget(ObjectReference Target, ObjectReference Caster, Float Of
     Float DistanceX = DistanceXY * Math.Sin(AngleZ)
     Float DistanceY = DistanceXY * Math.Cos(AngleZ)
 	Target.MoveTo(Caster, DistanceX, DistanceY, 0.0) ;DistanceZ
+	Wait(0.1)
 	Debug("Is target 3D visable " + Target.Is3DLoaded())
 EndFunction
 
