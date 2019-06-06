@@ -20,19 +20,19 @@ Weather Property FXMagicStormRain Auto ; D4886
 
 ; Props
 Activator property MintyActivator Auto
-ImageSpaceModifier property MintyMagShockStormImod Auto
 ImageSpaceModifier property MintyDA09BloomImod Auto
-Hazard property MintyLightningHazard Auto
 
 ; Script available variables
 Bool Property isLightningHostile = False Auto hidden ; will a strike kill anyone
-int Property chanceToFork = 25 Auto hidden ; Percentage to hit ground
-int Property distanceMultiplyer = 2 Auto hidden ; how many cells should we cover
+int Property chanceToFork = 50 Auto hidden ; Percentage to hit ground
+int Property distanceForkMultiplyer = 2 Auto hidden ; how many cells should we cover
+int Property distanceSheetMultiplyer = 4 Auto hidden ; how many cells should we cover
 Float Property strikeOffset =  200.0 Auto hidden ; movement between sheet targets
-Float Property updateFrequency =  1.0 Auto hidden ; game update cycle
+Float Property updateFrequency = 2.0 Auto hidden ; game update cycle
 Bool Property showDebugMessages = False Auto hidden ; Show debugging messages
 Bool Property logDebugMessages = False Auto hidden ; Log debugging messages
-Float Property bloom = 0.5 Auto hidden ; Bloom
+Float Property bloom = 3.0 Auto hidden 
+Float Property minAnimationTime = 0.15 Auto hidden
 
 ; TEMP - debugging aid, so we can test changes without going to forking WhiteRun again! ;o)
 Book Property MintyLightningConfigBook Auto
@@ -40,15 +40,16 @@ Form Property MintyDebuggingRing Auto
 
 ; Variables
 bool initalised = false
-Float height = 3584.0
-Float cellSize = 2048.0 
-Float minAnimationTime = 1.0
+; Float height = 3584.0 - prior to dubfixing a request
+Float height = 4096.0
+Float halfCellSize = 2048.0 
+
 Spell spellToCastFork = None
 Spell spellToCastSheet = None
-String version = "4.2"  
+String version = "9.0"  
 String LogFile = "Minty"
 Float strikeDistance = 200.0
-bool debugging = True
+bool debugging = False
 
 ObjectReference CasterRef = None
 ObjectReference TargetRef = None
@@ -57,20 +58,18 @@ ObjectReference TargetRef = None
 Event OnInit()
 	GotoState("WatchingTheWeather")
 	OpenUserLog(LogFile) 
+	TraceUser(LogFile,"Minty Lightning Quest (Version:" + version + ") Init...")
 	LogInfo("Minty Lightning Quest (Version:" + version + ") Init...")
 	
 	if (debugging)
-	
 		if (GetPlayer().GetItemCount(MintyLightningConfigBook) < 1)
 			LogDebug("Adding Book")
 			GetPlayer().addItem(MintyLightningConfigBook,1)
 		endif
-		
 		if (GetPlayer().GetItemCount(MintyDebuggingRing) < 1)
 			LogDebug("Adding Ring")
 			GetPlayer().addItem(MintyDebuggingRing)
 		endif			
-		
 	endif
 	
 	RegisterForSingleUpdate(updateFrequency)		
@@ -91,7 +90,7 @@ State WatchingTheWeather
 			bool forking = (RandomInt(0,100) < chanceToFork) ; % chance to get a fork ;o)
 			LogDebug("Chance to Fork = " + chanceToFork + "% : Are we Forking? - " + forking)
 
-			PlaceCaster()
+			PlaceCaster(forking)
 			PlaceTarget(forking)
 			InitLightning()
 			
@@ -110,9 +109,14 @@ State WatchingTheWeather
 EndState
 
 
-Function PlaceCaster()
-	Float strikeArea = (cellSize * distanceMultiplyer)
-	LogDebug("StrikeArea = " + strikeArea + ", distanceMulti=" + distanceMultiplyer)
+Function PlaceCaster(bool forking)
+
+	Float strikeArea = halfCellSize
+	if (forking)
+		strikeArea = (halfCellSize * distanceForkMultiplyer)
+	else 
+		strikeArea = (halfCellSize * distanceSheetMultiplyer)
+	endif
 	
 	if (CasterRef == None)
 		CasterRef = GetPlayer().PlaceAtme(MintyActivator,1)
@@ -175,9 +179,18 @@ EndFunction
 
 
 Float Function GetBloomIntensity()
-	Float distance = GetPlayer().GetDistance(CasterRef)
-	LogDebug("Casting Distance = " + distance + " away from player.")
-	return bloom
+	Float distance = GetPlayer().GetDistance(CasterRef) ; strikeDistance
+	distance = (bloom - distance)
+	if distance <= 0
+		return 0.25
+	else
+		distance = (distance / bloom)
+		if distance < 0.25
+			distance = 0.25
+		endif
+	endif
+	LogDebug("BloomIntensity Distance = " + distance + ", Bloom = " + bloom)
+	return distance
 EndFunction
 
 
@@ -191,6 +204,7 @@ EndFunction
 
 
 Function FireSheet()
+	
 	MintyDA09BloomImod.apply(GetBloomIntensity())
 	spellToCastSheet.Cast(CasterRef, TargetRef)
 	LogInfo("Sheet Lightning Casted")
@@ -224,50 +238,6 @@ Function InitLightning()
 	endif
 EndFunction
 
-
-Function playSkyHazard(ObjectReference Caster)
-	if MintyLightningHazard != none
-		;Caster.placeAtMe(MintyLightningHazard)
-		; REMEMBER TO REMOVE IF PLACED
-	endif	
-EndFunction
-
-
-; IMOD Effects, @ TODO move to external script
-
-
-Function playImodEffect(Float intensity) 
-	if MintyMagShockStormImod != None
-		;MintyMagShockStormImod.apply(intensity)
-		MintyMagShockStormImod.apply(0.10)
-	endif
-EndFunction
-
-
-String Function getImodDistanceDescription(Float distance) 
-	String desc = ("ERROR Getting Imod Distance (getImodDistanceDescription)")
-	if (distance == 0.10)
-		desc = "Distant"
-	elseif (distance == 0.15)
-		desc = "Medium"
-	elseif (distance == 0.25)
-		desc = "Local"
-	endif
-	LogDebug("Imod Distance is " + desc + " Distance: " + distance)
-	return desc
-EndFunction
-
-
-Float Function getImodIntensity(ObjectReference Caster) 
-	Float distance = GetPlayer().GetDistance(Caster)
-	if ((distance <= (cellSize * 3)) && (distance >= (cellSize * 2)))
-		return 0.10
-	elseif ((distance <= (cellSize * 2)) && (distance >= cellSize))
-		return 0.15
-	else
-		return 0.25
-	endif
-EndFunction
 
 
 ; Weather functions @ TODO MOve to external script
