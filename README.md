@@ -55,7 +55,7 @@ See also the list of [contributors](doc/CONTRIBUTORS.md) who participated in thi
 
 ## License
 
-This project is licensed under the [Apache License](doc/LICENSE.md)
+MintyLightningMod is licensed under [The MIT License (MIT)](doc/LICENSE.md). Which means that you can use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software. But you always need to state that MintyMods is the original author of this template.
 
 ## Acknowledgments
 
